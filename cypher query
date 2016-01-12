@@ -1,0 +1,28 @@
+
+1)Match by relation ship:
+match (n)-[r:Device_of]-() return n,count(n);
+
+2)To know the name of the owner of a device by device address
+
+match(c:DEVICE{address:'BL-A1-1000'})-[:Registered_with]->(r:PERSON) return c.name as device,r.name as person ,r.mobile as mobile
+
+3)To know the name and address of the person that is owner of the device
+
+match(c:DEVICE{address:'BL-A1-1000'})-[:Registered_with]->(r:PERSON)-[:Member]->(s:HOME) return r.name as person,r.mobile as mobile,r.email as email, s.name as home,s.address as address
+
+
+4)To know the memebr of home
+match(f:PERSON)-[:Owner|Member]->(e:HOME{name:'bigboss'}) return f.name as person,f.mobile as mobile,f.email as email,e.name as home,e.address as address
+
+5) to know total number of devices conected to a home with all details
+
+match(f:DEVICE)-[:Device_of]->(e:HOME{name:'bigboss'}) return f.name as device,f.address as address,e.name as home,e.address as address
+
+6) to know the total number of device in a home
+
+match(f:DEVICE)-[:Device_of]->(e:HOME{name:'bigboss'}) return count(f)
+
+7) to know the adress of home  to which device belongs:
+
+match(f:DEVICE{address:'BU8'})-[:Device_of]->(e:HOME) return e.name as home,e.address as address
+
